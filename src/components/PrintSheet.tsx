@@ -23,7 +23,7 @@ export default function PrintSheet({ students, onClose, onExportPdf, isExporting
   };
 
   return (
-    <div className="fixed inset-0 z-40 flex flex-col bg-gray-100">
+    <div className="print-sheet-root fixed inset-0 z-40 flex flex-col bg-gray-100">
       {/* Toolbar — hidden on print */}
       <div className="no-print flex items-center justify-between border-b border-gray-200 bg-white px-6 py-3 shadow-sm">
         <div className="flex items-center gap-3">
