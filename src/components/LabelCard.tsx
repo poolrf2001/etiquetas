@@ -14,9 +14,9 @@ const DOTS_COUNT = 14;
 export default function LabelCard({ student, size = "preview", className = "" }: LabelCardProps) {
   const isPrint = size === "print";
   const width = isPrint ? 400 : 340;
-  const height = isPrint ? 170 : 148;
-  const photoSize = isPrint ? 96 : 82;
-  const nameFontSize = isPrint ? "2.2rem" : "1.75rem";
+  const height = isPrint ? 130 : 110;
+  const photoSize = isPrint ? 80 : 68;
+  const nameFontSize = isPrint ? "2.8rem" : "2.4rem";
 
   return (
     <div
@@ -32,7 +32,7 @@ export default function LabelCard({ student, size = "preview", className = "" }:
       }}
     >
       {/* Name */}
-      <div className="flex flex-1 flex-col justify-center px-4 pb-5">
+      <div className="flex flex-1 flex-col justify-center px-4 pb-4">
         <span
           style={{
             fontSize: nameFontSize,
