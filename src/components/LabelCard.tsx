@@ -13,10 +13,10 @@ const DOTS_COUNT = 14;
 
 export default function LabelCard({ student, size = "preview", className = "" }: LabelCardProps) {
   const isPrint = size === "print";
-  const width = isPrint ? "100%" : 340;
-  const height = isPrint ? "100%" : 110;
-  const photoSize = isPrint ? 70 : 68;
-  const nameFontSize = isPrint ? "2.2rem" : "2.4rem";
+  const width = isPrint ? "133.22mm" : 340;
+  const height = isPrint ? "37.27mm" : 110;
+  const photoSize = isPrint ? 60 : 68;
+  const nameFontSize = isPrint ? "1.6rem" : "2.4rem";
 
   return (
     <div
@@ -24,7 +24,7 @@ export default function LabelCard({ student, size = "preview", className = "" }:
       style={{
         width,
         height,
-        ...(isPrint ? {} : { minWidth: width, minHeight: height }),
+        ...(!isPrint ? { minWidth: width, minHeight: height } : {}),
         backgroundColor: "#f5f0e8",
         border: "2px solid #374151",
         borderRadius: "0.75rem",

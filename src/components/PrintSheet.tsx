@@ -111,19 +111,21 @@ const PrintableContent = forwardRef<HTMLDivElement, { students: Student[] }>(
             style={{
               width: "210mm",
               height: "297mm",
-              padding: "8mm",
+              paddingTop: "9mm",
+              paddingBottom: "9mm",
+              paddingLeft: "0",
+              paddingRight: "0",
               boxSizing: "border-box",
               backgroundColor: "white",
               pageBreakAfter: pageIndex < pages.length - 1 ? "always" : "auto",
-              display: "grid",
-              gridTemplateRows: `repeat(${LABELS_PER_PAGE}, 1fr)`,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
               gap: "3mm",
             }}
           >
             {page.map((student) => (
-              <div key={student.id} style={{ minHeight: 0 }}>
-                <LabelCard student={student} size="print" />
-              </div>
+              <LabelCard key={student.id} student={student} size="print" />
             ))}
           </div>
         ))}
