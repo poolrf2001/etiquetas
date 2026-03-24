@@ -28,19 +28,17 @@ export default function LabelCard({ student, size = "preview", className = "" }:
         flexShrink: 0,
       }}
     >
-      {/* Decorative oval dots — behind text, vertically centred, same height as photo */}
+      {/* Decorative oval dots — bottom strip */}
       <div
         style={{
           position: "absolute",
-          top: "50%",
-          transform: "translateY(-50%)",
+          bottom: isPrint ? "1mm" : 4,
           left: isPrint ? "3mm" : "0.75rem",
           right: isPrint ? "33mm" : 84,
           display: "flex",
           alignItems: "center",
-          gap: isPrint ? "1.5mm" : "4px",
+          gap: isPrint ? "1.2mm" : "3px",
           zIndex: 0,
-          opacity: 0.55,
           pointerEvents: "none",
         }}
       >
@@ -49,10 +47,10 @@ export default function LabelCard({ student, size = "preview", className = "" }:
             key={i}
             style={{
               flexShrink: 0,
-              width: isPrint ? "3mm" : 7,
-              height: isPrint ? "31.56mm" : 92,
+              width: isPrint ? "7mm" : 17,
+              height: isPrint ? "4.81mm" : 11,
               borderRadius: "50%",
-              backgroundColor: `hsl(${(i * 25) % 360}, 40%, 62%)`,
+              backgroundColor: `hsl(${(i * 25) % 360}, 35%, 68%)`,
             }}
           />
         ))}
