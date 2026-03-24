@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: #f9fafb;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  body {
+    background: white;
+  }
+  @page {
+    margin: 1cm;
+    size: A4 portrait;
+  }
+}
+
+@media screen {
+  .print-only {
+    display: none !important;
+  }
+}
