@@ -13,30 +13,50 @@ const DOTS_COUNT = 14;
 
 export default function LabelCard({ student, size = "preview", className = "" }: LabelCardProps) {
   const isPrint = size === "print";
-  const width = isPrint ? "133.22mm" : 340;
-  const height = isPrint ? "37.27mm" : 110;
-  const photoSize = isPrint ? 60 : 68;
-  const nameFontSize = isPrint ? "1.6rem" : "2.4rem";
+
+  // Preview dimensions (px)
+  const previewWidth = 340;
+  const previewHeight = 110;
+  const previewPhotoW = 68;
+  const previewPhotoH = 68;
+  const previewFontSize = "2.4rem";
+  const previewDotSize = 8;
+
+  // Print dimensions (exact mm from design)
+  // Card: 133.22mm × 37.27mm
+  // Photo: 27.81mm × 31.56mm
+  // Name cap-height: 12.62mm → font-size ~16mm → 1rem≈3.78mm → ~4.2rem
 
   return (
     <div
-      className={`relative flex items-center overflow-hidden rounded-xl ${className}`}
+      className={`relative flex items-center overflow-hidden ${className}`}
       style={{
-        width,
-        height,
-        ...(!isPrint ? { minWidth: width, minHeight: height } : {}),
+        width: isPrint ? "133.22mm" : previewWidth,
+        height: isPrint ? "37.27mm" : previewHeight,
+        ...(!isPrint && { minWidth: previewWidth, minHeight: previewHeight }),
         backgroundColor: "#f5f0e8",
-        border: "2px solid #374151",
-        borderRadius: "0.75rem",
+        border: isPrint ? "1.5px solid #4b5563" : "2px solid #374151",
+        borderRadius: isPrint ? "3mm" : "0.75rem",
+        flexShrink: 0,
       }}
     >
       {/* Name */}
-      <div className="flex flex-1 flex-col justify-center px-4 pb-4">
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          paddingLeft: isPrint ? "4mm" : "1rem",
+          paddingRight: isPrint ? "2mm" : "0.5rem",
+          paddingBottom: isPrint ? "3mm" : "1rem",
+        }}
+      >
         <span
           style={{
-            fontSize: nameFontSize,
+            fontSize: isPrint ? "4.2rem" : previewFontSize,
             fontWeight: 900,
-            lineHeight: 1.15,
+            lineHeight: isPrint ? "12.62mm" : 1.15,
             wordBreak: "break-word",
             color: "#111827",
           }}
@@ -47,20 +67,22 @@ export default function LabelCard({ student, size = "preview", className = "" }:
 
       {/* Photo */}
       <div
-        className="mr-3 flex-shrink-0 overflow-hidden"
         style={{
-          width: photoSize,
-          height: photoSize,
+          width: isPrint ? "27.81mm" : previewPhotoW,
+          height: isPrint ? "31.56mm" : previewPhotoH,
+          marginRight: isPrint ? "2mm" : "0.75rem",
+          flexShrink: 0,
+          overflow: "hidden",
           border: "1px solid #9ca3af",
-          borderRadius: "0.375rem",
+          borderRadius: isPrint ? "1.5mm" : "0.375rem",
         }}
       >
         {student.photoDataUrl ? (
           <Image
             src={student.photoDataUrl}
             alt={student.name}
-            width={photoSize}
-            height={photoSize}
+            width={isPrint ? 105 : previewPhotoW}
+            height={isPrint ? 119 : previewPhotoH}
             className="h-full w-full object-cover"
             unoptimized
           />
@@ -77,14 +99,26 @@ export default function LabelCard({ student, size = "preview", className = "" }:
       </div>
 
       {/* Decorative dots */}
-      <div className="absolute bottom-0 left-0 right-0 flex items-center gap-1 px-3 py-1">
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          display: "flex",
+          alignItems: "center",
+          gap: isPrint ? "1mm" : "4px",
+          paddingLeft: isPrint ? "3mm" : "0.75rem",
+          paddingBottom: isPrint ? "1mm" : "4px",
+        }}
+      >
         {Array.from({ length: DOTS_COUNT }).map((_, i) => (
           <div
             key={i}
-            className="flex-shrink-0"
             style={{
-              width: 8,
-              height: 8,
+              flexShrink: 0,
+              width: isPrint ? "2.5mm" : previewDotSize,
+              height: isPrint ? "2.5mm" : previewDotSize,
               borderRadius: "50%",
               backgroundColor: `hsl(${(i * 25) % 360}, 40%, 65%)`,
             }}
