@@ -118,10 +118,11 @@ const PrintableContent = forwardRef<HTMLDivElement, { students: Student[] }>(
               boxSizing: "border-box",
               backgroundColor: "white",
               pageBreakAfter: pageIndex < pages.length - 1 ? "always" : "auto",
+              breakAfter: pageIndex < pages.length - 1 ? "page" : "auto",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              gap: "3mm",
+              justifyContent: "space-between",
             }}
           >
             {page.map((student) => (

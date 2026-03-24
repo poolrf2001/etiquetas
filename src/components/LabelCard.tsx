@@ -14,32 +14,50 @@ const DOTS_COUNT = 14;
 export default function LabelCard({ student, size = "preview", className = "" }: LabelCardProps) {
   const isPrint = size === "print";
 
-  // Preview dimensions (px)
-  const previewWidth = 340;
-  const previewHeight = 110;
-  const previewPhotoW = 68;
-  const previewPhotoH = 68;
-  const previewFontSize = "2.4rem";
-  const previewDotSize = 8;
-
-  // Print dimensions (exact mm from design)
-  // Card: 133.22mm × 37.27mm
-  // Photo: 27.81mm × 31.56mm
-  // Name cap-height: 12.62mm → font-size ~16mm → 1rem≈3.78mm → ~4.2rem
-
   return (
     <div
       className={`relative flex items-center overflow-hidden ${className}`}
       style={{
-        width: isPrint ? "133.22mm" : previewWidth,
-        height: isPrint ? "37.27mm" : previewHeight,
-        ...(!isPrint && { minWidth: previewWidth, minHeight: previewHeight }),
+        width: isPrint ? "133.22mm" : 340,
+        height: isPrint ? "37.27mm" : 110,
+        ...(!isPrint && { minWidth: 340, minHeight: 110 }),
+        boxSizing: "border-box",
         backgroundColor: "#f5f0e8",
-        border: isPrint ? "1.5px solid #4b5563" : "2px solid #374151",
+        border: isPrint ? "0.8mm solid #4b5563" : "3px solid #4b5563",
         borderRadius: isPrint ? "3mm" : "0.75rem",
         flexShrink: 0,
       }}
     >
+      {/* Decorative oval dots — behind text, vertically centred, same height as photo */}
+      <div
+        style={{
+          position: "absolute",
+          top: "50%",
+          transform: "translateY(-50%)",
+          left: isPrint ? "3mm" : "0.75rem",
+          right: isPrint ? "33mm" : 84,
+          display: "flex",
+          alignItems: "center",
+          gap: isPrint ? "1.5mm" : "4px",
+          zIndex: 0,
+          opacity: 0.55,
+          pointerEvents: "none",
+        }}
+      >
+        {Array.from({ length: DOTS_COUNT }).map((_, i) => (
+          <div
+            key={i}
+            style={{
+              flexShrink: 0,
+              width: isPrint ? "3mm" : 7,
+              height: isPrint ? "31.56mm" : 92,
+              borderRadius: "50%",
+              backgroundColor: `hsl(${(i * 25) % 360}, 40%, 62%)`,
+            }}
+          />
+        ))}
+      </div>
+
       {/* Name */}
       <div
         style={{
@@ -49,12 +67,12 @@ export default function LabelCard({ student, size = "preview", className = "" }:
           justifyContent: "center",
           paddingLeft: isPrint ? "4mm" : "1rem",
           paddingRight: isPrint ? "2mm" : "0.5rem",
-          paddingBottom: isPrint ? "3mm" : "1rem",
+          zIndex: 1,
         }}
       >
         <span
           style={{
-            fontSize: isPrint ? "4.2rem" : previewFontSize,
+            fontSize: isPrint ? "4.2rem" : "2.4rem",
             fontWeight: 900,
             lineHeight: isPrint ? "12.62mm" : 1.15,
             wordBreak: "break-word",
@@ -68,21 +86,22 @@ export default function LabelCard({ student, size = "preview", className = "" }:
       {/* Photo */}
       <div
         style={{
-          width: isPrint ? "27.81mm" : previewPhotoW,
-          height: isPrint ? "31.56mm" : previewPhotoH,
+          width: isPrint ? "27.81mm" : 68,
+          height: isPrint ? "31.56mm" : 92,
           marginRight: isPrint ? "2mm" : "0.75rem",
           flexShrink: 0,
           overflow: "hidden",
-          border: "1px solid #9ca3af",
+          border: isPrint ? "0.6mm solid #6b7280" : "1.5px solid #9ca3af",
           borderRadius: isPrint ? "1.5mm" : "0.375rem",
+          zIndex: 1,
         }}
       >
         {student.photoDataUrl ? (
           <Image
             src={student.photoDataUrl}
             alt={student.name}
-            width={isPrint ? 105 : previewPhotoW}
-            height={isPrint ? 119 : previewPhotoH}
+            width={isPrint ? 105 : 68}
+            height={isPrint ? 119 : 92}
             className="h-full w-full object-cover"
             unoptimized
           />
@@ -96,34 +115,6 @@ export default function LabelCard({ student, size = "preview", className = "" }:
             </svg>
           </div>
         )}
-      </div>
-
-      {/* Decorative dots */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          display: "flex",
-          alignItems: "center",
-          gap: isPrint ? "1mm" : "4px",
-          paddingLeft: isPrint ? "3mm" : "0.75rem",
-          paddingBottom: isPrint ? "1mm" : "4px",
-        }}
-      >
-        {Array.from({ length: DOTS_COUNT }).map((_, i) => (
-          <div
-            key={i}
-            style={{
-              flexShrink: 0,
-              width: isPrint ? "2.5mm" : previewDotSize,
-              height: isPrint ? "2.5mm" : previewDotSize,
-              borderRadius: "50%",
-              backgroundColor: `hsl(${(i * 25) % 360}, 40%, 65%)`,
-            }}
-          />
-        ))}
       </div>
     </div>
   );
