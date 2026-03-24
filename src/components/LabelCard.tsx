@@ -9,7 +9,7 @@ interface LabelCardProps {
   className?: string;
 }
 
-const DOTS_COUNT = 14;
+const DOTS_COUNT = 12;
 
 export default function LabelCard({ student, size = "preview", className = "" }: LabelCardProps) {
   const isPrint = size === "print";
@@ -32,12 +32,12 @@ export default function LabelCard({ student, size = "preview", className = "" }:
       <div
         style={{
           position: "absolute",
-          bottom: isPrint ? "1mm" : 4,
+          bottom: isPrint ? "3mm" : 8,
           left: isPrint ? "3mm" : "0.75rem",
           right: isPrint ? "33mm" : 84,
           display: "flex",
           alignItems: "center",
-          gap: isPrint ? "1.2mm" : "3px",
+          gap: isPrint ? "1.5mm" : "4px",
           zIndex: 0,
           pointerEvents: "none",
         }}
@@ -47,8 +47,8 @@ export default function LabelCard({ student, size = "preview", className = "" }:
             key={i}
             style={{
               flexShrink: 0,
-              width: isPrint ? "7mm" : 17,
-              height: isPrint ? "4.81mm" : 11,
+              width: isPrint ? "4.5mm" : 11,
+              height: isPrint ? "7.5mm" : 18,
               borderRadius: "50%",
               backgroundColor: `hsl(${(i * 25) % 360}, 35%, 68%)`,
             }}
