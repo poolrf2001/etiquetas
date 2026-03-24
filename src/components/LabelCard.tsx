@@ -14,20 +14,33 @@ const DOTS_COUNT = 14;
 export default function LabelCard({ student, size = "preview", className = "" }: LabelCardProps) {
   const isPrint = size === "print";
   const width = isPrint ? 400 : 340;
-  const height = isPrint ? 160 : 136;
-  const photoSize = isPrint ? 90 : 76;
-  const nameFontSize = isPrint ? "1.5rem" : "1.25rem";
+  const height = isPrint ? 170 : 148;
+  const photoSize = isPrint ? 96 : 82;
+  const nameFontSize = isPrint ? "2.2rem" : "1.75rem";
 
   return (
     <div
-      className={`relative flex items-center overflow-hidden rounded-xl border-2 border-gray-700 bg-[#f5f0e8] ${className}`}
-      style={{ width, height, minWidth: width, minHeight: height }}
+      className={`relative flex items-center overflow-hidden rounded-xl ${className}`}
+      style={{
+        width,
+        height,
+        minWidth: width,
+        minHeight: height,
+        backgroundColor: "#f5f0e8",
+        border: "2px solid #374151",
+        borderRadius: "0.75rem",
+      }}
     >
       {/* Name */}
       <div className="flex flex-1 flex-col justify-center px-4 pb-5">
         <span
-          className="font-black leading-tight text-gray-900"
-          style={{ fontSize: nameFontSize, wordBreak: "break-word" }}
+          style={{
+            fontSize: nameFontSize,
+            fontWeight: 900,
+            lineHeight: 1.15,
+            wordBreak: "break-word",
+            color: "#111827",
+          }}
         >
           {student.name}
         </span>
@@ -35,8 +48,13 @@ export default function LabelCard({ student, size = "preview", className = "" }:
 
       {/* Photo */}
       <div
-        className="mr-3 flex-shrink-0 overflow-hidden rounded-md border border-gray-400"
-        style={{ width: photoSize, height: photoSize }}
+        className="mr-3 flex-shrink-0 overflow-hidden"
+        style={{
+          width: photoSize,
+          height: photoSize,
+          border: "1px solid #9ca3af",
+          borderRadius: "0.375rem",
+        }}
       >
         {student.photoDataUrl ? (
           <Image
@@ -48,7 +66,10 @@ export default function LabelCard({ student, size = "preview", className = "" }:
             unoptimized
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gray-200 text-gray-400">
+          <div
+            className="flex h-full w-full items-center justify-center"
+            style={{ backgroundColor: "#e5e7eb", color: "#9ca3af" }}
+          >
             <svg viewBox="0 0 24 24" fill="currentColor" className="h-10 w-10">
               <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
             </svg>
@@ -61,8 +82,11 @@ export default function LabelCard({ student, size = "preview", className = "" }:
         {Array.from({ length: DOTS_COUNT }).map((_, i) => (
           <div
             key={i}
-            className="h-2 w-2 flex-shrink-0 rounded-full"
+            className="flex-shrink-0"
             style={{
+              width: 8,
+              height: 8,
+              borderRadius: "50%",
               backgroundColor: `hsl(${(i * 25) % 360}, 40%, 65%)`,
             }}
           />
