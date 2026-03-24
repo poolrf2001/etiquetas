@@ -37,7 +37,7 @@ export default function LabelCard({ student, size = "preview", className = "" }:
           right: isPrint ? "33mm" : 84,
           display: "flex",
           alignItems: "center",
-          gap: isPrint ? "1.5mm" : "4px",
+          gap: isPrint ? "2.5mm" : "6px",
           zIndex: 0,
           pointerEvents: "none",
         }}
@@ -65,6 +65,7 @@ export default function LabelCard({ student, size = "preview", className = "" }:
           justifyContent: "center",
           paddingLeft: isPrint ? "4mm" : "1rem",
           paddingRight: isPrint ? "2mm" : "0.5rem",
+          paddingBottom: isPrint ? "12mm" : 28,
           zIndex: 1,
         }}
       >
