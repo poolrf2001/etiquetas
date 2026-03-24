@@ -93,32 +93,42 @@ export default function PrintSheet({ students, onClose, onExportPdf, isExporting
 // Separate component so we can ref it for html2canvas and also render it for print
 import { forwardRef } from "react";
 
+const LABELS_PER_PAGE = 7;
+
 const PrintableContent = forwardRef<HTMLDivElement, { students: Student[] }>(
-  ({ students }, ref) => (
-    <div
-      ref={ref}
-      id="print-sheet"
-      className="bg-white"
-      style={{
-        width: "210mm",
-        padding: "10mm",
-        boxSizing: "border-box",
-      }}
-    >
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "8mm",
-        }}
-      >
-        {students.map((student, i) => (
-          <div key={student.id} style={{ pageBreakInside: "avoid" }}>
-            <LabelCard student={student} size="print" />
+  ({ students }, ref) => {
+    // Chunk students into pages of 7
+    const pages: Student[][] = [];
+    for (let i = 0; i < students.length; i += LABELS_PER_PAGE) {
+      pages.push(students.slice(i, i + LABELS_PER_PAGE));
+    }
+
+    return (
+      <div ref={ref} id="print-sheet">
+        {pages.map((page, pageIndex) => (
+          <div
+            key={pageIndex}
+            style={{
+              width: "210mm",
+              height: "297mm",
+              padding: "8mm",
+              boxSizing: "border-box",
+              backgroundColor: "white",
+              pageBreakAfter: pageIndex < pages.length - 1 ? "always" : "auto",
+              display: "grid",
+              gridTemplateRows: `repeat(${LABELS_PER_PAGE}, 1fr)`,
+              gap: "3mm",
+            }}
+          >
+            {page.map((student) => (
+              <div key={student.id} style={{ minHeight: 0 }}>
+                <LabelCard student={student} size="print" />
+              </div>
+            ))}
           </div>
         ))}
       </div>
-    </div>
-  )
+    );
+  }
 );
 PrintableContent.displayName = "PrintableContent";
